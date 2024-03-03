@@ -10,7 +10,7 @@ public class LoginJFrame extends javax.swing.JFrame {
  
     public LoginJFrame() {
         initComponents();
-        loginFail.setVisible(true);
+        loginFail.setVisible(false);
         loginButton.setVisible(true);
         
     }
@@ -21,42 +21,20 @@ public class LoginJFrame extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         loginArea = new javax.swing.JPanel();
-        loginFail = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         someIcon = new javax.swing.JPanel();
         loginPassword = new javax.swing.JTextField();
         loginUsername = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        loginFail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 250));
+        setResizable(false);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        loginFail.setText("Sai tên đăng nhập hoặc mật khẩu");
-
-        javax.swing.GroupLayout loginAreaLayout = new javax.swing.GroupLayout(loginArea);
-        loginArea.setLayout(loginAreaLayout);
-        loginAreaLayout.setHorizontalGroup(
-            loginAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginAreaLayout.createSequentialGroup()
-                .addContainerGap(236, Short.MAX_VALUE)
-                .addComponent(loginFail, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
-        );
-        loginAreaLayout.setVerticalGroup(
-            loginAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginAreaLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(loginFail)
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(loginArea, java.awt.BorderLayout.PAGE_END);
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        loginArea.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout someIconLayout = new javax.swing.GroupLayout(someIcon);
         someIcon.setLayout(someIconLayout);
@@ -69,9 +47,9 @@ public class LoginJFrame extends javax.swing.JFrame {
             .addGap(0, 180, Short.MAX_VALUE)
         );
 
-        jPanel3.add(someIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        jPanel3.add(loginPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 160, -1));
-        jPanel3.add(loginUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 160, -1));
+        loginArea.add(someIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        loginArea.add(loginPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 160, -1));
+        loginArea.add(loginUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 160, -1));
 
         loginButton.setText("Đăng nhập");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,38 +57,60 @@ public class LoginJFrame extends javax.swing.JFrame {
                 loginButtonMouseClicked(evt);
             }
         });
-        jPanel3.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, -1, -1));
+        loginArea.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
 
         jLabel1.setText("Mật khẩu");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 90, 20));
+        loginArea.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 90, 20));
 
         jLabel2.setText("Tên đăng nhập");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 90, 20));
+        loginArea.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 90, 20));
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        loginFail.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
+        jPanel1.add(loginFail, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(loginArea, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(loginArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    private void disposeResources() {
+        this.dispose();
+    }
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         Connection connection;
         try {
             String username = loginUsername.getText();
             String password = loginPassword.getText();
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/qlkhoca", username, password);
-            
+
             if (connection != null)
-                new MainJFrame().setVisible(true);
-            
-        } catch (SQLException se){
-            System.out.println(se);
-            loginFail.setVisible(true);
+            new MainJFrame().setVisible(true);
         } catch (Exception e){
             System.out.println(e);
+            loginFail.setVisible(true);
+        } finally {
+            disposeResources();
         }
+        
     }//GEN-LAST:event_loginButtonMouseClicked
 
     
@@ -151,11 +151,11 @@ public class LoginJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel loginArea;
     private javax.swing.JButton loginButton;
-    private javax.swing.JLabel loginFail;
+    private javax.swing.JTextField loginFail;
     private javax.swing.JTextField loginPassword;
     private javax.swing.JTextField loginUsername;
     private javax.swing.JPanel someIcon;

@@ -3,12 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package management.JFrames;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
+import java.util.concurrent.TimeUnit;
 
 import java.awt.Dimension;
 
@@ -24,6 +32,10 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         dashboard.setVisible(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
+        DefaultTableModel tModel = (DefaultTableModel) storageDataTable.getModel();
+        tModel.setRowCount(0);
+        
     }
 
     /**
@@ -46,9 +58,16 @@ public class MainJFrame extends javax.swing.JFrame {
         closeButton = new javax.swing.JLabel();
         background = new javax.swing.JPanel();
         sidebar = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        menuButton = new javax.swing.JLabel();
         dashboard = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        workplace = new javax.swing.JLayeredPane();
+        layeredWorkplace = new javax.swing.JLayeredPane();
+        storagePanel = new javax.swing.JPanel();
+        functionPanel = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        storageScrollPane = new javax.swing.JScrollPane();
+        storageDataTable = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,38 +162,110 @@ public class MainJFrame extends javax.swing.JFrame {
         sidebar.setBackground(new java.awt.Color(0, 153, 0));
         sidebar.setPreferredSize(new java.awt.Dimension(50, 50));
         sidebar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel2.setBackground(new java.awt.Color(0, 153, 0));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        menuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back_32px.png"))); // NOI18N
-        menuButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuButtonMouseClicked(evt);
-            }
-        });
-        jPanel2.add(menuButton, java.awt.BorderLayout.CENTER);
-
-        sidebar.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
-
-        background.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 710));
+        background.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 780));
 
         dashboard.setBackground(new java.awt.Color(0, 102, 51));
         dashboard.setPreferredSize(new java.awt.Dimension(400, 710));
+        dashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout dashboardLayout = new javax.swing.GroupLayout(dashboard);
-        dashboard.setLayout(dashboardLayout);
-        dashboardLayout.setHorizontalGroup(
-            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+        jPanel4.setPreferredSize(new java.awt.Dimension(350, 50));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Danh mục");
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 40));
+
+        dashboard.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 40));
+
+        background.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 220, 780));
+
+        layeredWorkplace.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        storagePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout functionPanelLayout = new javax.swing.GroupLayout(functionPanel);
+        functionPanel.setLayout(functionPanelLayout);
+        functionPanelLayout.setHorizontalGroup(
+            functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(functionPanelLayout.createSequentialGroup()
+                .addGap(486, 486, 486)
+                .addComponent(jButton1)
+                .addContainerGap(749, Short.MAX_VALUE))
         );
-        dashboardLayout.setVerticalGroup(
-            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+        functionPanelLayout.setVerticalGroup(
+            functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, functionPanelLayout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23))
         );
 
-        background.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 350, 710));
+        storagePanel.add(functionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1310, -1));
+
+        storageDataTable.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        storageDataTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã kho", "Nhiệt độ", "Độ ẩm", "Khối lượng hiện tại", "Sức chứa"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        storageDataTable.setRowHeight(50);
+        storageDataTable.setShowGrid(true);
+        storageScrollPane.setViewportView(storageDataTable);
+        if (storageDataTable.getColumnModel().getColumnCount() > 0) {
+            storageDataTable.getColumnModel().getColumn(0).setResizable(false);
+            storageDataTable.getColumnModel().getColumn(1).setResizable(false);
+            storageDataTable.getColumnModel().getColumn(2).setResizable(false);
+            storageDataTable.getColumnModel().getColumn(3).setResizable(false);
+            storageDataTable.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        storagePanel.add(storageScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 107, 1310, 670));
+
+        layeredWorkplace.add(storagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1310, 780));
+
+        workplace.setLayer(layeredWorkplace, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout workplaceLayout = new javax.swing.GroupLayout(workplace);
+        workplace.setLayout(workplaceLayout);
+        workplaceLayout.setHorizontalGroup(
+            workplaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, workplaceLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(layeredWorkplace, javax.swing.GroupLayout.PREFERRED_SIZE, 1896, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        workplaceLayout.setVerticalGroup(
+            workplaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layeredWorkplace)
+        );
+
+        background.add(workplace, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1310, 770));
 
         getContentPane().add(background, java.awt.BorderLayout.CENTER);
 
@@ -213,22 +304,44 @@ public class MainJFrame extends javax.swing.JFrame {
         button.setIcon(img);
     }
     
-    private void menuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuButtonMouseClicked
-        SwingUtilities.invokeLater(() -> {
-        if (showDashboard) {
-            dashboard.setVisible(false);
-            showDashboard = false;
-        } else {
-            dashboard.setVisible(true);
-            showDashboard = true;
+    private void refreshStorageData(String username, String password){
+        Connection connection = null;
+        
+        DefaultTableModel tModel = (DefaultTableModel) storageDataTable.getModel();
+        tModel.setRowCount(0);
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/qlkhoca", username, password);
+            
+            Statement st = connection.createStatement();
+            String query = "SELECT * FROM danhmuc_kho;";
+            ResultSet rs = st.executeQuery(query);
+            
+            while (rs.next()){
+                String id = String.valueOf(rs.getString(1));
+                String tempC = String.valueOf(String.format("%.2g%n", rs.getFloat(2)));
+                String humidity  = String.valueOf(String.format("%.2g%n", rs.getFloat(3)));
+                String current_kg = String.valueOf(String.format("%.2g%n", rs.getFloat(4)));
+                String max_kg = String.valueOf(String.format("%.2g%n", rs.getFloat(5)));
+                
+                String storageData[] = {id, tempC, humidity, current_kg, max_kg};
+                
+                tModel.addRow(storageData);
+            }
         }
-    });
-
-    }//GEN-LAST:event_menuButtonMouseClicked
-
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    
     private void minButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minButtonMouseClicked
         setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_minButtonMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        refreshStorageData("postgres", "postgres");
+    }//GEN-LAST:event_jButton1MouseClicked
 
     
     
@@ -273,15 +386,22 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel close;
     private javax.swing.JLabel closeButton;
     private javax.swing.JPanel dashboard;
+    private javax.swing.JPanel functionPanel;
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLayeredPane layeredWorkplace;
     private javax.swing.JLabel maxButton;
     private javax.swing.JPanel maximize;
-    private javax.swing.JLabel menuButton;
     private javax.swing.JLabel minButton;
     private javax.swing.JPanel minimize;
     private javax.swing.JPanel minmaxclose;
     private javax.swing.JPanel sidebar;
+    private javax.swing.JTable storageDataTable;
+    private javax.swing.JPanel storagePanel;
+    private javax.swing.JScrollPane storageScrollPane;
+    private javax.swing.JLayeredPane workplace;
     // End of variables declaration//GEN-END:variables
 }

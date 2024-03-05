@@ -96,20 +96,20 @@ public class LoginJFrame extends javax.swing.JFrame {
         this.dispose();
     }
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        Connection connection;
+        Connection connection = null;
         try {
             String username = loginUsername.getText();
             String password = loginPassword.getText();
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/qlkhoca", username, password);
 
-            if (connection != null)
-            new MainJFrame().setVisible(true);
+            if (connection != null){
+                new MainJFrame().setVisible(true);
+                disposeResources();
+            }
         } catch (Exception e){
             System.out.println(e);
             loginFail.setVisible(true);
-        } finally {
-            disposeResources();
-        }
+        } 
         
     }//GEN-LAST:event_loginButtonMouseClicked
 

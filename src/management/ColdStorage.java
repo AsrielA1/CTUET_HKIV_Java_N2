@@ -7,7 +7,7 @@ import javax.swing.*;
 public class ColdStorage {
 
     public static void main(String[] args) {
-        LoginJFrame frame = new LoginJFrame();
+        MainJFrame frame = new MainJFrame();
         frame.setVisible(true);
     }
 }

@@ -82,7 +82,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         header.setBackground(new java.awt.Color(0, 153, 0));
         header.setPreferredSize(new java.awt.Dimension(800, 50));

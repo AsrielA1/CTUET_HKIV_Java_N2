@@ -1,13 +1,13 @@
 package management;
 
-import management.JFrames.*;
+import management.JFrames.fish.fishJFrame;
 
 import javax.swing.*;
 
 public class ColdStorage {
 
     public static void main(String[] args) {
-        MainJFrame frame = new MainJFrame();
+        fishJFrame frame = new fishJFrame();
         frame.setVisible(true);
     }
 }

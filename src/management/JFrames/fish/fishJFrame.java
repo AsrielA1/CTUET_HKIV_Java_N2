@@ -5,11 +5,18 @@
 package management.JFrames.fish;
 
 import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
-import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,9 +29,7 @@ public class fishJFrame extends javax.swing.JFrame {
      */
     public fishJFrame() {
         initComponents();
-        
-        DefaultTableModel tModel = (DefaultTableModel) fishDataTable.getModel();
-        tModel.setRowCount(0);
+        refreshFishData("postgres", "postgres");
     }
 
     /**
@@ -37,21 +42,99 @@ public class fishJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         allPanel = new javax.swing.JPanel();
+        functionPanel = new javax.swing.JPanel();
+        refreshButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        delButton = new javax.swing.JButton();
+        idSearch = new javax.swing.JTextField();
+        nameSearch = new javax.swing.JTextField();
+        tempCHighSearch = new javax.swing.JTextField();
+        tempCLowSearch = new javax.swing.JTextField();
+        humidityHighSearch = new javax.swing.JTextField();
+        humidityLowSearch = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         fishDataTable = new javax.swing.JTable();
-        deleteButton = new javax.swing.JButton();
-        addButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 600));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        allPanel.setPreferredSize(new java.awt.Dimension(600, 600));
-        allPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        allPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(50, 50));
+        refreshButton.setText("Làm mới");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
 
+        addButton.setText("Thêm");
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
+        });
+
+        delButton.setText("jButton1");
+
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout functionPanelLayout = new javax.swing.GroupLayout(functionPanel);
+        functionPanel.setLayout(functionPanelLayout);
+        functionPanelLayout.setHorizontalGroup(
+            functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(functionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(idSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nameSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(functionPanelLayout.createSequentialGroup()
+                        .addComponent(tempCHighSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(humidityHighSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(functionPanelLayout.createSequentialGroup()
+                        .addComponent(tempCLowSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(humidityLowSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(refreshButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(delButton)))
+                .addContainerGap())
+        );
+        functionPanelLayout.setVerticalGroup(
+            functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, functionPanelLayout.createSequentialGroup()
+                .addContainerGap(67, Short.MAX_VALUE)
+                .addGroup(functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tempCHighSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(humidityHighSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(refreshButton)
+                    .addComponent(addButton)
+                    .addComponent(delButton)
+                    .addComponent(idSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tempCLowSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(humidityLowSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+        );
+
+        fishDataTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         fishDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -60,7 +143,7 @@ public class fishJFrame extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+                "Mã", "Tên loại cá", "Nhiệt độ trên", "Nhiệt độ dưới", "Độ ẩm trên", "Độ ẩm dưới"
             }
         ) {
             Class[] types = new Class [] {
@@ -78,10 +161,8 @@ public class fishJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        fishDataTable.setAutoscrolls(false);
-        fishDataTable.setGridColor(new java.awt.Color(0, 0, 0));
-        fishDataTable.setPreferredSize(new java.awt.Dimension(600, 600));
         fishDataTable.setShowGrid(true);
+        fishDataTable.setShowHorizontalLines(true);
         jScrollPane1.setViewportView(fishDataTable);
         if (fishDataTable.getColumnModel().getColumnCount() > 0) {
             fishDataTable.getColumnModel().getColumn(0).setResizable(false);
@@ -92,46 +173,27 @@ public class fishJFrame extends javax.swing.JFrame {
             fishDataTable.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        allPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 600, 640));
-
-        deleteButton.setText("Xóa");
-        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deleteButtonMouseClicked(evt);
-            }
-        });
-        allPanel.add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, -1, -1));
-
-        addButton.setText("Thêm");
-        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addButtonMouseClicked(evt);
-            }
-        });
-        allPanel.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, -1, -1));
-
-        refreshButton.setText("Cập nhật");
-        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refreshButtonMouseClicked(evt);
-            }
-        });
-        allPanel.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(allPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout allPanelLayout = new javax.swing.GroupLayout(allPanel);
+        allPanel.setLayout(allPanelLayout);
+        allPanelLayout.setHorizontalGroup(
+            allPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addComponent(functionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(allPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        allPanelLayout.setVerticalGroup(
+            allPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(allPanelLayout.createSequentialGroup()
+                .addComponent(functionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
         );
+
+        getContentPane().add(allPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
     
     private void refreshFishData(String username, String password){
         Connection connection = null;
@@ -165,18 +227,93 @@ public class fishJFrame extends javax.swing.JFrame {
         }
     }
     
-    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteButtonMouseClicked
-
-    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-        newFishJFrame frame = new newFishJFrame();
-        frame.setVisible(true);
-    }//GEN-LAST:event_addButtonMouseClicked
-
+    private static boolean isTextFieldEmpty(JTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+    
+    //TODO: Them truong hop chi lay tren/duoi
+    private void searchFishData(String username, String password){
+        Connection connection = null;
+        String query = "";
+        
+        boolean id_null = isTextFieldEmpty(idSearch);
+        boolean name_null = isTextFieldEmpty(nameSearch);
+        boolean tempC_high_null = isTextFieldEmpty(tempCHighSearch);
+        boolean tempC_low_null = isTextFieldEmpty(tempCLowSearch);
+        boolean humidity_high_null = isTextFieldEmpty(humidityHighSearch);
+        boolean humidity_low_null = isTextFieldEmpty(humidityLowSearch);
+        
+        
+        List<String> conditions = new ArrayList<>();
+        if (!id_null){
+            conditions.add("ma_loaica = '" + String.valueOf(idSearch.getText()) + "'");
+        }
+        if (!name_null){
+            conditions.add("ten_loaica = '" + String.valueOf(nameSearch.getText()) + "'");
+        }
+        
+        if (tempC_high_null && !tempC_low_null || !tempC_high_null && tempC_low_null){
+            JOptionPane.showMessageDialog(null, "Đôi với nhiệt độ cần cả 2 ngưỡng trên và dưới", "Nhập thiếu dữ liệu", JOptionPane.WARNING_MESSAGE);
+        }
+        if (!tempC_high_null && !tempC_low_null){
+            conditions.add("nhietdo_tren <= " + String.valueOf(tempCHighSearch.getText()) + " AND " + "nhietdo_duoi >= " + String.valueOf(tempCLowSearch.getText()));
+        }
+        
+        if (humidity_high_null && !humidity_low_null || !humidity_high_null && humidity_low_null){
+            JOptionPane.showMessageDialog(null, "Đôi với độ ẩm cần cả 2 ngưỡng trên và dưới", "Nhập thiếu dữ liệu", JOptionPane.WARNING_MESSAGE);
+        }
+        if (!humidity_high_null && !humidity_low_null){
+            conditions.add("doam_tren <= " + String.valueOf(humidityHighSearch.getText()) + " AND " + "doam_duoi >= " + String.valueOf(humidityLowSearch.getText()));
+        }
+        
+        DefaultTableModel tModel = (DefaultTableModel) fishDataTable.getModel();
+        tModel.setRowCount(0);
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", username, password);
+            
+            
+            Statement st = connection.createStatement();
+            query = "SELECT * FROM danhmuc_ca";
+            if (!conditions.isEmpty()) {
+                query += " WHERE ";
+                query += String.join(" AND ", conditions);
+            } 
+            System.out.println(query);
+            ResultSet rs = st.executeQuery(query);
+            
+            while (rs.next()){
+                String id = String.valueOf(rs.getString(1));
+                String name = String.valueOf(rs.getString(2));
+                String tempC_high = String.valueOf(String.format("%.2g%n", rs.getFloat(3)));
+                String tempC_low  = String.valueOf(String.format("%.2g%n", rs.getFloat(4)));
+                String humidity_high = String.valueOf(String.format("%.2g%n", rs.getFloat(5)));
+                String humidity_low  = String.valueOf(String.format("%.2g%n", rs.getFloat(6)));
+                
+                String storageData[] = {id, name, tempC_high, tempC_low, humidity_high, humidity_low};
+                
+                tModel.addRow(storageData);
+            }
+            
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
         refreshFishData("postgres", "postgres");
     }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        searchFishData("postgres", "postgres");
+    }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        newFishJFrame addFishDataFrame = new newFishJFrame();
+        addFishDataFrame.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -216,9 +353,17 @@ public class fishJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JPanel allPanel;
-    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton delButton;
     private javax.swing.JTable fishDataTable;
+    private javax.swing.JPanel functionPanel;
+    private javax.swing.JTextField humidityHighSearch;
+    private javax.swing.JTextField humidityLowSearch;
+    private javax.swing.JTextField idSearch;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nameSearch;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField tempCHighSearch;
+    private javax.swing.JTextField tempCLowSearch;
     // End of variables declaration//GEN-END:variables
 }

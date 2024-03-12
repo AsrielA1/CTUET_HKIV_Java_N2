@@ -1,6 +1,6 @@
 package management;
 
-import management.JFrames.fish.fishJFrame;
+import management.views.fish.fishJFrame;
 
 import javax.swing.*;
 

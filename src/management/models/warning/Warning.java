@@ -25,6 +25,8 @@ public class Warning implements IWarning{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public Warning(){}
 
     public Warning(String warningDate, String warningTime, String storageId, String warningType, String levelOfThreat, String warningNote) {
         this.warningDate = warningDate;

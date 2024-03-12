@@ -29,6 +29,8 @@ public class Supply implements IInputHistory{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public Supply(){}
 
     public Supply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote) {
         this.supplyId = supplyId;

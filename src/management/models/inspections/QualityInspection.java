@@ -25,6 +25,8 @@ public class QualityInspection implements IQualityInspection{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public QualityInspection(){}
 
     public QualityInspection(String inspectionId, String storageId, String inspectionDate, float lossWeight, float lossRatio, String inspectionNote) {
         this.inspectionId = inspectionId;

@@ -25,6 +25,8 @@ public class OutputHistory implements IOutputHistory{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public OutputHistory(){}
 
     public OutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote) {
         this.outputId = outputId;

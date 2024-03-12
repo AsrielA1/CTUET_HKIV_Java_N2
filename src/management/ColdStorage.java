@@ -2,12 +2,12 @@ package management;
 
 import management.views.fish.fishJFrame;
 
-import javax.swing.*;
+import management.models.categories.Employee;
 
 public class ColdStorage {
 
     public static void main(String[] args) {
-        fishJFrame frame = new fishJFrame();
-        frame.setVisible(true);
+        Employee employee = new Employee();
+        employee.delEmployee("1");
     }
 }

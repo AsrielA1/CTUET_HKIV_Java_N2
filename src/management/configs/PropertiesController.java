@@ -1,6 +1,7 @@
 package management.configs;
 
 import java.io.FileReader;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +22,14 @@ public class PropertiesController {
     public static HashMap<String, String> getProperties() {
         Properties prop = new Properties();
         
-        try (FileReader reader = new FileReader("./db.properties")) {
+        String parent_dir = System.getProperty("user.dir");
+        
+        try (FileReader reader = new FileReader(parent_dir + "\\src\\management\\configs\\db.properties")) {
             prop.load(reader);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Error loading properties: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println(e);
         }
         
         HashMap<String, String> retMap = new HashMap<>();

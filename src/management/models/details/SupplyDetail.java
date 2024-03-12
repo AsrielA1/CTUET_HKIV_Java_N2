@@ -23,6 +23,8 @@ public class SupplyDetail implements ISupplyDetail{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public SupplyDetail(){}
 
     public SupplyDetail(String supplyId, int supplyNumber, String fishId, float weight, float cost) {
         this.supplyId = supplyId;

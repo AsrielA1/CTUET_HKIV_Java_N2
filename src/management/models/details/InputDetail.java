@@ -18,6 +18,8 @@ public class InputDetail {
     private String storageId;
     private String fishId;
     private float weight;
+    
+    public InputDetail(){}
 
     public InputDetail(String supplyId, int supplyNumber, String storageId, String fishId, float weight) {
         this.supplyId = supplyId;
@@ -31,6 +33,7 @@ public class InputDetail {
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
     
     public void addInputDetail(String supplyId, int supplyNumber, String storageId, String fishId, float weight){
         Connection connection = null;

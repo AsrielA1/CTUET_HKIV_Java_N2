@@ -23,6 +23,8 @@ public class Provider implements IProvider{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public Provider(){}
 
     public Provider(String providerId, String providerName, String providerEmail, String providerNumber) {
         this.providerId = providerId;

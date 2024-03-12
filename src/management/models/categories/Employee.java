@@ -25,6 +25,8 @@ public class Employee implements IEmployee{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public Employee(){}
 
     public Employee(String employeeId, String password, String employeeName, String employeeNumber) {
         this.employeeId = employeeId;

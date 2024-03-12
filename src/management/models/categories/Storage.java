@@ -17,6 +17,8 @@ public class Storage implements IStorage{
     private float currentWeight;
     private float maxWeight;
     private String storageNote;
+    
+    public Storage(){}
 
     public Storage(String storageId, float currentWeight, float maxWeight, String storageNote) {
         this.storageId = storageId;

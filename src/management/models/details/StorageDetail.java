@@ -25,6 +25,8 @@ public class StorageDetail implements IStorageDetail{
     private final String url = properties.get("url");
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
+    
+    public StorageDetail(){}
 
     public StorageDetail(Fish fishId, String storageId) {
         this.fishId = fishId;

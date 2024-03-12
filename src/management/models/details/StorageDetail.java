@@ -10,7 +10,7 @@ import management.configs.PropertiesController;
 import management.models.categories.Storage;
 import management.models.categories.Fish;
 
-//Không được xóa dữ liệu trong database
+//Không được xóa dữ liệu trong database, chỉ mang tính chất tượng trưngg
 interface IStorageDetail{
     void addStorageDetail(String storageId, String fishId);
     void delStorageDetail(String storageId, String fishId);
@@ -18,7 +18,7 @@ interface IStorageDetail{
 
 public class StorageDetail implements IStorageDetail{
     private Fish fishId;
-    private Storage storageId;
+    private String storageId;
     private float weight;
     
     private final HashMap<String, String> properties = PropertiesController.getProperties();
@@ -26,7 +26,7 @@ public class StorageDetail implements IStorageDetail{
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
 
-    public StorageDetail(Fish fishId, Storage storageId) {
+    public StorageDetail(Fish fishId, String storageId) {
         this.fishId = fishId;
         this.storageId = storageId;
     }
@@ -39,11 +39,11 @@ public class StorageDetail implements IStorageDetail{
         this.fishId = fishId;
     }
 
-    public Storage getStorageId() {
+    public String getStorageId() {
         return storageId;
     }
 
-    public void setStorageId(Storage storageId) {
+    public void setStorageId(String storageId) {
         this.storageId = storageId;
     }
 
@@ -65,7 +65,7 @@ public class StorageDetail implements IStorageDetail{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO nhan_vien VALUES (?, ?, 0.0);";
+            String query = "INSERT INTO chitiet_kho VALUES (?, ?, ?);";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, storageId);
             pstmt.setString(2, fishId);
@@ -94,7 +94,7 @@ public class StorageDetail implements IStorageDetail{
             pstmt.executeUpdate();
         }
         catch (Exception e){
-            System.out.println("Error in management.models.catagories.Employee.delEmployee\n" + e);
+            System.out.println("Error in management.models.details.StorageDetail.delStorageDetail\n" + e);
         }
     }
 }

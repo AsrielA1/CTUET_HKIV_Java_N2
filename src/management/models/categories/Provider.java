@@ -73,7 +73,7 @@ public class Provider implements IProvider{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO nhan_vien VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO nha_cungcap VALUES (?, ?, ?, ?);";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, providerId);
             pstmt.setString(2, providerName);
@@ -97,7 +97,7 @@ public class Provider implements IProvider{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM danhmuc_ca WHERE ma_nhanvien = '" + providerId + "';";
+            String query = "DELETE FROM nha_cungcap WHERE ma_nhacungcap = '" + providerId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }

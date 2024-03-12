@@ -1,28 +1,28 @@
 package management.models.categories;
 
-public class Storage {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.HashMap;
+import management.configs.PropertiesController;
+
+interface IStorage{
+    void addStorage(String storageId, float currentWeight, float maxWeight, String storageNote);
+    void delStorage(String storageId);
+}
+
+public class Storage implements IStorage{
     private String storageId;
-    private float storageTempC;
-    private float storageHumidity;
     private float currentWeight;
     private float maxWeight;
-    private String storageDescribe;
+    private String storageNote;
 
-    public Storage(String storageId, float storageTempC, float storageHumidity, float currentWeight, float maxWeight, String storageDescribe) {
+    public Storage(String storageId, float currentWeight, float maxWeight, String storageNote) {
         this.storageId = storageId;
-        this.storageTempC = storageTempC;
-        this.storageHumidity = storageHumidity;
         this.currentWeight = currentWeight;
         this.maxWeight = maxWeight;
-        this.storageDescribe = storageDescribe;
-    }
-
-    public Storage(String storageId, float storageTempC, float storageHumidity, float currentWeight, float maxWeight) {
-        this.storageId = storageId;
-        this.storageTempC = storageTempC;
-        this.storageHumidity = storageHumidity;
-        this.currentWeight = currentWeight;
-        this.maxWeight = maxWeight;
+        this.storageNote = storageNote;
     }
 
     public String getStorageId() {
@@ -31,22 +31,6 @@ public class Storage {
 
     public void setStorageId(String storageId) {
         this.storageId = storageId;
-    }
-
-    public float getStorageTempC() {
-        return storageTempC;
-    }
-
-    public void setStorageTempC(float storageTempC) {
-        this.storageTempC = storageTempC;
-    }
-
-    public float getStorageHumidity() {
-        return storageHumidity;
-    }
-
-    public void setStorageHumidity(float storageHumidity) {
-        this.storageHumidity = storageHumidity;
     }
 
     public float getCurrentWeight() {
@@ -65,13 +49,58 @@ public class Storage {
         this.maxWeight = maxWeight;
     }
 
-    public String getStorageDescribe() {
-        return storageDescribe;
+    public String getStorageNote() {
+        return storageNote;
     }
 
-    public void setStorageDescribe(String storageDescribe) {
-        this.storageDescribe = storageDescribe;
+    public void setStorageNote(String storageNote) {
+        this.storageNote = storageNote;
     }
     
+    private final HashMap<String, String> properties = PropertiesController.getProperties();
+    private final String url = properties.get("url");
+    private final String dbUsername = properties.get("username");
+    private final String dbPassword = properties.get("password");
     
+    @Override
+    public void addStorage(String storageId, float currentWeight, float maxWeight, String storageNote){
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            
+            String query = "INSERT INTO danhmuc_kho VALUES (?, ?, ?, ?);";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, storageId);
+            pstmt.setFloat(2, currentWeight);
+            pstmt.setFloat(3, maxWeight);
+            pstmt.setString(4, storageNote);
+            
+            pstmt.executeUpdate();
+        }
+        catch (Exception e){
+            System.out.println("Error in management.models.catagories.Storage.addStorage\n" + e);
+        }
+    }
+    
+    @Override
+    public void delStorage(String storageId){
+        Connection connection = null;
+        Statement stmt = null;
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            
+            String query = "DELETE FROM danhmuc_kho WHERE ma_kho = '" + storageId + "';";
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+        }
+        catch (Exception e){
+            System.out.println("Error in management.models.catagories.Employee.delEmployee\n" + e);
+        }
+    }
 }

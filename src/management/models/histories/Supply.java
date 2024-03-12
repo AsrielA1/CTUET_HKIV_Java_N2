@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 
 interface IInputHistory{
-    void addInputHistory(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote);
-    void delInputHistory(String supplyId);
+    void addSupply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote);
+    void delSupply(String supplyId);
     
 }
 
@@ -97,7 +97,7 @@ public class Supply implements IInputHistory{
     }
     
     @Override
-    public void addInputHistory(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote){
+    public void addSupply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -106,7 +106,7 @@ public class Supply implements IInputHistory{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO nha_cungcap VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO thongtin_lohang VALUES (?, ?, ?, ?, ?, ?, ?);";
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, providerId);
@@ -120,13 +120,13 @@ public class Supply implements IInputHistory{
             pstmt.executeUpdate();
         }
         catch (Exception e){
-            System.out.println("Error in management.models.histories.InputHistory.addInputHistory\n" + e);
+            System.out.println("Error in management.models.histories.Supply.addSupply\n" + e);
         }
     }
     
     //Không xóa nhà cung cấp trong bất kỳ tình huống nào
     @Override
-    public void delInputHistory(String supplyId){
+    public void delSupply(String supplyId){
         Connection connection = null;
         Statement stmt = null;
         
@@ -134,12 +134,12 @@ public class Supply implements IInputHistory{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM danhmuc_ca WHERE ma_nhanvien = '" + providerId + "';";
+            String query = "DELETE FROM thongtin_lohang WHERE ma_lohang = '" + providerId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch (Exception e){
-            System.out.println("Error in management.models.catagories.Provider.delProvider\n" + e);
+            System.out.println("Error in management.models.histories.Supply.delSupply\n" + e);
         }
     }
 }

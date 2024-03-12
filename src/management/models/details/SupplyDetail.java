@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package management.models.details;
 
 import java.sql.Connection;
@@ -57,22 +53,28 @@ public class SupplyDetail implements ISupplyDetail{
             pstmt.executeUpdate();
         }
         catch (Exception e){
-            System.out.println("Error in management.models.catagories.Employee.addEmployee\n" + e);
+            System.out.println("Error in management.models.details.SupplyDetail.addSupplyDetail\n" + e);
         }
     }
     
     public void delSupplyDetail(String supplyId, int supplyNumber){
         Connection connection = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = ""
+            String query = "DELETE FROM chitiet_lohang WHERE ma_lohang = ? AND so_thutu = ?";
+            pstmt = connection.prepareStatement(query);
+            
+            pstmt.setString(1, supplyId);
+            pstmt.setInt(2, supplyNumber);
+            
+            pstmt.executeUpdate();
         }
         catch (Exception e){
-            System.out.println("Error in management.models.catagories.Employee.delEmployee\n" + e);
+            System.out.println("Error in management.models.details.SupplyDetail.delSupplyDetail\n" + e);
         }
     }
 }

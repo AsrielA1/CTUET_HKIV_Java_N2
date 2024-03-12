@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.HashMap;
+import management.configs.PropertiesController;
 
 
 interface IFish{    
-    void addFishData(String fishId, String fishName, float tempCUp, float tempCLow, float humidityUp, float humidityLow, String fishNote);
-    void delFishData(String fishId);
+    void addFish(String fishId, String fishName, float tempCUp, float tempCLow, float humidityUp, float humidityLow, String fishNote);
+    void delFish(String fishId);
 }
 
 public class Fish implements IFish{
@@ -49,8 +51,13 @@ public class Fish implements IFish{
         this.fishNote = fishNote;
     }
     
+    private final HashMap<String, String> properties = PropertiesController.getProperties();
+    private final String url = properties.get("url");
+    private final String dbUsername = properties.get("username");
+    private final String dbPassword = properties.get("password");
+    
     @Override
-    public void addFishData(String fishId, String fishName, float tempCUp, float tempCLow, float humidityUp, float humidityLow, String fishNote){
+    public void addFish(String fishId, String fishName, float tempCUp, float tempCLow, float humidityUp, float humidityLow, String fishNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -61,7 +68,7 @@ public class Fish implements IFish{
         
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "Postgres");
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
             String query = "INSERT INTO danhmuc_ca VALUES(?, ?, ?, ?, ?, ?, ?); "; 
             pstmt = connection.prepareStatement(query);
@@ -81,24 +88,25 @@ public class Fish implements IFish{
                 System.out.println("SOMETHING WRONG");
             
         } catch (Exception e){
-            System.out.println(e);
+            System.out.println("Error in management.models.categories.Fish.addFishData\n" + e);
         }
     }
     
     @Override
-    public void delFishData(String fishId){
+    public void delFish(String fishId){
         Connection connection = null;
         Statement stmt = null;
         
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
             String query = "DELETE FROM danhmuc_ca WHERE ma_loaica = '" + fishId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch (Exception e){
+            System.out.println("Error in management.models.categories.Fish.delFish\n" + e);
         }
     }
 }

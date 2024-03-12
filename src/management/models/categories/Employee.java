@@ -98,7 +98,7 @@ public class Employee implements IEmployee{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM danhmuc_ca WHERE ma_nhanvien = '" + employeeId + "';";
+            String query = "DELETE FROM nhan_vien WHERE ma_nhanvien = '" + employeeId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }

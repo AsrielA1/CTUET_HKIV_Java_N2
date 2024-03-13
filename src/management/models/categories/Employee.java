@@ -22,9 +22,9 @@ public class Employee implements IEmployee{
     private String employeeNumber;
     
     private final HashMap<String, String> properties = PropertiesController.getProperties();
-    private String url = properties.get("url");
-    private String dbUsername = properties.get("username");
-    private String dbPassword = properties.get("password");
+    private final String url = properties.get("url");
+    private final String dbUsername = properties.get("username");
+    private final String dbPassword = properties.get("password");
 
     public Employee(String employeeId, String password, String employeeName, String employeeNumber) {
         this.employeeId = employeeId;
@@ -77,10 +77,10 @@ public class Employee implements IEmployee{
             
             String query = "INSERT INTO nhan_vien VALUES (?, ?, ?, ?);";
             pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, query);
-            pstmt.setString(2, query);
-            pstmt.setString(3, query);
-            pstmt.setString(4, query);
+            pstmt.setString(1, employeeId);
+            pstmt.setString(2, employeePassword);
+            pstmt.setString(3, employeeName);
+            pstmt.setString(4, employeeNumber);
             
             pstmt.executeUpdate();
         }

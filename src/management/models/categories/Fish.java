@@ -57,11 +57,6 @@ public class Fish implements IFish{
         String id = fishId;
         String name = fishName;
         
-        float _tempC_up = tempCUp;
-        float _tempC_low = tempCLow;
-        float _humidity_up = humidityUp;
-        float _humidity_low = humidityLow;
-        
         String note = fishNote;
         
         try {
@@ -73,10 +68,10 @@ public class Fish implements IFish{
             
             pstmt.setString(1, id);
             pstmt.setString(2, name);
-            pstmt.setFloat(3, _tempC_up);
-            pstmt.setFloat(4, _tempC_low);
-            pstmt.setFloat(5, _humidity_up);
-            pstmt.setFloat(6, _humidity_low);
+            pstmt.setFloat(3, tempCUp);
+            pstmt.setFloat(4, tempCLow);
+            pstmt.setFloat(5, humidityUp);
+            pstmt.setFloat(6, humidityLow);
             pstmt.setString(7, note);
             
             int status = pstmt.executeUpdate();

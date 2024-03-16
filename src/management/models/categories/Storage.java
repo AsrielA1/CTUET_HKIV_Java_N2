@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import management.configs.PropertiesController;
 
 interface IStorage{
     void addStorage(String storageId, float currentWeight, float maxWeight, String storageNote);
     void delStorage(String storageId);
+    void updateStorage(String storageId, float currentWeight, float maxWeight, String storageNote);
 }
 
 public class Storage implements IStorage{
@@ -24,38 +27,6 @@ public class Storage implements IStorage{
         this.storageId = storageId;
         this.currentWeight = currentWeight;
         this.maxWeight = maxWeight;
-        this.storageNote = storageNote;
-    }
-
-    public String getStorageId() {
-        return storageId;
-    }
-
-    public void setStorageId(String storageId) {
-        this.storageId = storageId;
-    }
-
-    public float getCurrentWeight() {
-        return currentWeight;
-    }
-
-    public void setCurrentWeight(float currentWeight) {
-        this.currentWeight = currentWeight;
-    }
-
-    public float getMaxWeight() {
-        return maxWeight;
-    }
-
-    public void setMaxWeight(float maxWeight) {
-        this.maxWeight = maxWeight;
-    }
-
-    public String getStorageNote() {
-        return storageNote;
-    }
-
-    public void setStorageNote(String storageNote) {
         this.storageNote = storageNote;
     }
     
@@ -97,12 +68,49 @@ public class Storage implements IStorage{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM danhmuc_kho WHERE ma_kho = '" + storageId + "';";
+            String query = "UPDATE danhmuc_kho SET ghi_chu = 'Hủy' WHERE ma_kho = '" + storageId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch (Exception e){
             System.out.println("Error in management.models.catagories.Employee.delEmployee\n" + e);
+        }
+    }
+    
+    @Override
+    public void updateStorage(String storageId, float currentWeight, float maxWeight, String storageNote){
+        Connection connection = null;
+        Statement stmt = null;
+        List<String> updateList = new ArrayList<>();
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            
+            if (storageNote != null){
+                updateList.add("ghi_chu = " + storageNote);
+            }
+            
+            String query = "UPDATE nhan_vien ";
+            if (!updateList.isEmpty()){
+                query += " SET ";
+                for (int i = 0; i < updateList.size(); i++) {
+                    query += updateList.get(i);
+                    if (i < updateList.size() - 1) {
+                        query += ", ";
+                    }
+                }
+            }
+            query += "WHERE ma_nhacungcap = " + storageId;
+            
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+            
+            System.out.println(query);
+        }
+        catch (Exception e){
+            System.out.println("Error in management.models.catagories.Provider.updateProvider\n" + e);
         }
     }
 }

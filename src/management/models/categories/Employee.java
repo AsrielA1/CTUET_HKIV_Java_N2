@@ -8,11 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 
 interface IEmployee{
     void addEmployee(String employeeId, String employeePassword, String employeeName, String employeeNumber);
     void delEmployee(String employeeId);
+    void updateEmployee(String employeeId, String employeeName, String employeeNumber);
 }
 
 public class Employee implements IEmployee{
@@ -32,38 +35,6 @@ public class Employee implements IEmployee{
         this.employeeId = employeeId;
         this.password = password;
         this.employeeName = employeeName;
-        this.employeeNumber = employeeNumber;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public String getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(String employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
     
@@ -100,12 +71,53 @@ public class Employee implements IEmployee{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM nhan_vien WHERE ma_nhanvien = '" + employeeId + "';";
+            String query = "UPDATE nhan_vien SET ghi_chu = 'Nghỉ' WHERE ma_nhanvien = '" + employeeId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch (Exception e){
             System.out.println("Error in management.models.catagories.Employee.delEmployee\n" + e);
+        }
+    }
+    
+    
+    @Override
+    public void updateEmployee(String employeeId, String employeeName, String employeeNumber){
+        Connection connection = null;
+        Statement stmt = null;
+        List<String> updateList = new ArrayList<>();
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            
+            if (employeeName != null){
+                updateList.add("ho_ten = " + employeeName);
+            }
+            if (employeeNumber != null){
+                updateList.add("so_dienthoai = " + employeeNumber);
+            }
+            
+            String query = "UPDATE nhan_vien ";
+            if (!updateList.isEmpty()){
+                query += " SET ";
+                for (int i = 0; i < updateList.size(); i++) {
+                    query += updateList.get(i);
+                    if (i < updateList.size() - 1) {
+                        query += ", ";
+                    }
+                }
+            }
+            query += "WHERE ma_nhanvien = " + employeeId;
+            
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+            
+            System.out.println(query);
+        }
+        catch (Exception e){
+            System.out.println("Error in management.models.catagories.Employee.updateEmployee\n" + e);
         }
     }
 }

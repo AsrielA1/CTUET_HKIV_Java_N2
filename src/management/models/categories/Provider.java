@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import management.configs.PropertiesController;
 
 
 interface IProvider{
     void addProvider(String providerId, String providerName, String providerEmail, String providerNumber);
     void delProvider(String providerId);
+    void updateProvider(String providerId, String providerName, String providerEmail, String providerNumber);
 }
 
 public class Provider implements IProvider{
@@ -30,38 +33,6 @@ public class Provider implements IProvider{
         this.providerId = providerId;
         this.providerName = providerName;
         this.providerEmail = providerEmail;
-        this.providerNumber = providerNumber;
-    }
-    
-    public String getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
-
-    public String getProviderName() {
-        return providerName;
-    }
-
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
-    public String getProviderEmail() {
-        return providerEmail;
-    }
-
-    public void setProviderEmail(String providerEmail) {
-        this.providerEmail = providerEmail;
-    }
-
-    public String getProviderNumber() {
-        return providerNumber;
-    }
-
-    public void setProviderNumber(String providerNumber) {
         this.providerNumber = providerNumber;
     }
 
@@ -108,5 +79,46 @@ public class Provider implements IProvider{
         }
     }
     
-    
+    @Override
+    public void updateProvider(String providerId, String providerName, String providerEmail, String providerNumber){
+        Connection connection = null;
+        Statement stmt = null;
+        List<String> updateList = new ArrayList<>();
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            
+            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            
+            if (providerName != null){
+                updateList.add("ten_nhacungcap = " + providerName);
+            }
+            if (providerEmail != null){
+                updateList.add("so_dienthoai = " + providerEmail);
+            }
+            if (providerNumber != null){
+                updateList.add("so_dienthoai = " + providerNumber);
+            }
+            
+            String query = "UPDATE nhan_vien ";
+            if (!updateList.isEmpty()){
+                query += " SET ";
+                for (int i = 0; i < updateList.size(); i++) {
+                    query += updateList.get(i);
+                    if (i < updateList.size() - 1) {
+                        query += ", ";
+                    }
+                }
+            }
+            query += "WHERE ma_nhacungcap = " + providerId;
+            
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+            
+            System.out.println(query);
+        }
+        catch (Exception e){
+            System.out.println("Error in management.models.catagories.Provider.updateProvider\n" + e);
+        }
+    }
 }

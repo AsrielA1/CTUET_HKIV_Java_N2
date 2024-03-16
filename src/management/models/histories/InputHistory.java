@@ -6,17 +6,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Date;
+import java.sql.Time;
 
+import java.text.SimpleDateFormat;  
 import java.util.HashMap;
 
 
 interface IInputHistory{
-    void addSupply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote);
-    void delSupply(String supplyId);
+    void addInputHistory(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote);
+    void delInputHistory(String supplyId);
     
 }
 
-public class Supply implements IInputHistory{
+public class InputHistory implements IInputHistory{
     private String supplyId;
     private String inputDate;
     private String inputTime;
@@ -30,76 +33,20 @@ public class Supply implements IInputHistory{
     private final String dbUsername = properties.get("username");
     private final String dbPassword = properties.get("password");
     
-    public Supply(){}
+    public InputHistory(){}
 
-    public Supply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote) {
+    public InputHistory(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote) {
         this.supplyId = supplyId;
         this.inputDate = inputDate;
         this.inputTime = inputTime;
         this.totalWeight = totalWeight;
         this.totalCost = totalCost;
         this.providerId = providerId;
-        this.inputNote = inputNote;
-    }
-
-    public String getInputId() {
-        return supplyId;
-    }
-
-    public void setInputId(String supplyId) {
-        this.supplyId = supplyId;
-    }
-
-    public String getInputDate() {
-        return inputDate;
-    }
-
-    public void setInputDate(String inputDate) {
-        this.inputDate = inputDate;
-    }
-
-    public String getInputTime() {
-        return inputTime;
-    }
-
-    public void setInputTime(String inputTime) {
-        this.inputTime = inputTime;
-    }
-
-    public float getTotalWeight() {
-        return totalWeight;
-    }
-
-    public void setTotalWeight(float totalWeight) {
-        this.totalWeight = totalWeight;
-    }
-
-    public float getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(float totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public String getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
-
-    public String getInputNote() {
-        return inputNote;
-    }
-
-    public void setInputNote(String inputNote) {
         this.inputNote = inputNote;
     }
     
     @Override
-    public void addSupply(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote){
+    public void addInputHistory(String supplyId, String inputDate, String inputTime, float totalWeight, float totalCost, String providerId, String inputNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -108,13 +55,14 @@ public class Supply implements IInputHistory{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO thongtin_lohang VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO lichsu_nhapkhko VALUES (?, ?, ?, ?, ?, ?, ?);";
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, providerId);
-            pstmt.setString(2, inputDate);
-            pstmt.setString(3, inputTime);
+            pstmt.setDate(2, Date.valueOf(inputDate));
+            pstmt.setTime(3, Time.valueOf(inputTime));
             pstmt.setFloat(4, totalWeight);
+            //TODO: Cần kiểm tra lại tiền/đơn vị tính
             pstmt.setFloat(5, totalCost);
             pstmt.setString(6, providerId);
             pstmt.setString(7, inputNote);
@@ -128,7 +76,7 @@ public class Supply implements IInputHistory{
     
     //Không xóa nhà cung cấp trong bất kỳ tình huống nào
     @Override
-    public void delSupply(String supplyId){
+    public void delInputHistory(String supplyId){
         Connection connection = null;
         Statement stmt = null;
         
@@ -136,7 +84,7 @@ public class Supply implements IInputHistory{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM thongtin_lohang WHERE ma_lohang = '" + providerId + "';";
+            String query = "UPDATE lichsu_nhapkho SET ghi_chu = \'Hủy\' WHERE ma_lohang = '" + supplyId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }

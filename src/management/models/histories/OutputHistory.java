@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+
+import java.sql.Time;
+import java.sql.Date;
+
 import java.util.HashMap;
+
 import management.configs.PropertiesController;
 
-
-interface IOutputHistory{
+interface IOutputHistory{    
     void addOutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote);
     void delOutputHistory(String outputId);
 }
@@ -36,54 +40,6 @@ public class OutputHistory implements IOutputHistory{
         this.totalOutputIncome = totalOutputIncome;
         this.outputNote = outputNote;
     }
-
-    public String getOutputId() {
-        return outputId;
-    }
-
-    public void setOutputId(String outputId) {
-        this.outputId = outputId;
-    }
-
-    public String getOutputDate() {
-        return outputDate;
-    }
-
-    public void setOutputDate(String outputDate) {
-        this.outputDate = outputDate;
-    }
-
-    public String getOutputTime() {
-        return outputTime;
-    }
-
-    public void setOutputTime(String outputTime) {
-        this.outputTime = outputTime;
-    }
-
-    public float getTotalOutputWeight() {
-        return totalOutputWeight;
-    }
-
-    public void setTotalOutputWeight(float totalOutputWeight) {
-        this.totalOutputWeight = totalOutputWeight;
-    }
-
-    public float getTotalOutputIncome() {
-        return totalOutputIncome;
-    }
-
-    public void setTotalOutputIncome(float totalOutputIncome) {
-        this.totalOutputIncome = totalOutputIncome;
-    }
-
-    public String getOutputNote() {
-        return outputNote;
-    }
-
-    public void setOutputNote(String outputNote) {
-        this.outputNote = outputNote;
-    }
     
     @Override
     public void addOutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote){
@@ -99,8 +55,8 @@ public class OutputHistory implements IOutputHistory{
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, outputId);
-            pstmt.setString(2, outputDate);
-            pstmt.setString(3, outputTime);
+            pstmt.setDate(2, Date.valueOf(outputDate));
+            pstmt.setTime(3, Time.valueOf(outputTime));
             pstmt.setFloat(4, totalOutputWeight);
             pstmt.setFloat(5, totalOutputIncome);
             pstmt.setString(6, outputNote);
@@ -121,7 +77,7 @@ public class OutputHistory implements IOutputHistory{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM lichsu_xuatkho WHERE ma_xuatkho = '" + outputId + "';";
+            String query = "UPDATE lichsu_xuatkho SET ghi_chu = \'Hủy\' WHERE ma_lohang = '" + outputId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }

@@ -11,11 +11,11 @@ import management.configs.PropertiesController;
 
 interface IInputDetail{
     void addWeightToStorage(String storageId, float weight);
-    void addWeightToInputHistory(String supplyId, float weight);
-    void addInputDetail(String supplyId, int supplyNumber, String storageId, String fishId, float weight);
+    void addWeightToInputHistory(String supplyId, float weight, float cost);
+    void addInputDetail(String supplyId, int supplyNumber, String storageId, float costPerWeight, float weight, String inputDetailNote);
     
     void minusWeightFromStorage(String storageId, float weight);
-    void minusWeightFromInputHistory(String supplyId, float weight);
+    void minusWeightFromInputHistory(String supplyId, float weight, float cost);
     void delInputDetail(String supplyId, int supplyNumber);
 }
 
@@ -23,17 +23,18 @@ public class InputDetail implements IInputDetail{
     private String supplyId;
     private int supplyNumber;
     private String storageId;
-    private String fishId;
+    private float costPerWeight;
     private float weight;
+    private String inputDetailNote;
     
     public InputDetail(){}
 
-    public InputDetail(String supplyId, int supplyNumber, String storageId, String fishId, float weight) {
+        public InputDetail(String supplyId, int supplyNumber, String storageId, float weight, float costPerWeight, String inputDetailNote) {
         this.supplyId = supplyId;
         this.supplyNumber = supplyNumber;
         this.storageId = storageId;
-        this.fishId = fishId;
         this.weight = weight;
+        this.inputDetailNote = inputDetailNote;
     }
     
     private final HashMap<String, String> properties = PropertiesController.getProperties();
@@ -42,7 +43,7 @@ public class InputDetail implements IInputDetail{
     private final String dbPassword = properties.get("password");
     
     @Override
-    public void addWeightToInputHistory(String supplyId, float weight){
+    public void addWeightToInputHistory(String supplyId, float weight, float cost){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -53,12 +54,15 @@ public class InputDetail implements IInputDetail{
             
             String query = "UPDATE lichsu_nhapkho SET tong_khoiluong = tong_khoiluong + ? WHERE ma_lohang = ?";
             pstmt = connection.prepareStatement(query);
-            
             pstmt.setFloat(1, weight);
-            pstmt.setString(2, supplyId);
-            
+            pstmt.setString(2, supplyId);            
             pstmt.executeUpdate();
             
+            query = "UPDATE lichsu_nhapkho SET tong_chiphi = tong_chiphi + ? WHERE ma_lohang = ?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setFloat(1, cost);
+            pstmt.setString(2, supplyId);
+            pstmt.executeUpdate();
         }
         catch (Exception e){
             System.out.println("Error in management.models.details.InputDetail.addWeightToInputHistory\n" + e);
@@ -90,7 +94,7 @@ public class InputDetail implements IInputDetail{
     }
     
     @Override
-    public void addInputDetail(String supplyId, int supplyNumber, String storageId, String fishId, float weight){
+    public void addInputDetail(String supplyId, int supplyNumber, String storageId, float costPerWeight, float weight, String inputDetailNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -99,17 +103,23 @@ public class InputDetail implements IInputDetail{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO chitiet_nhapkho VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO chitiet_nhapkho VALUES (?, ?, ?, ?, ?, ?, ?);";
+            
+            float cost = costPerWeight * weight;
+            
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, supplyId);
             pstmt.setInt(2, supplyNumber);
             pstmt.setString(3, storageId);
-            pstmt.setFloat(4, weight);
+            pstmt.setFloat(4, costPerWeight);
+            pstmt.setFloat(5, weight);
+            pstmt.setFloat(6, cost);
+            pstmt.setString(7, inputDetailNote);
             
             pstmt.executeUpdate();
             
             addWeightToStorage(storageId, weight);
-            addWeightToInputHistory(supplyId, weight);
+            addWeightToInputHistory(supplyId, weight, cost);
         }
         catch (Exception e){
             System.out.println("Error in management.models.details.InputDetail.addInputDetail\n" + e);
@@ -141,7 +151,7 @@ public class InputDetail implements IInputDetail{
     }
     
     @Override
-    public void minusWeightFromInputHistory(String supplyId, float weight){
+    public void minusWeightFromInputHistory(String supplyId, float weight, float cost){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -150,12 +160,16 @@ public class InputDetail implements IInputDetail{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "UPDATE lichsu_nhapkho SET khoiluong_hientai = khoiluong_hientai - ? WHERE ma_kho = ?";
+            String query = "UPDATE lichsu_nhapkho SET tong_khoiluong = tong_khoiluong - ? WHERE ma_lohang = ?";
             pstmt = connection.prepareStatement(query);
-            
             pstmt.setFloat(1, weight);
             pstmt.setString(2, supplyId);
+            pstmt.executeUpdate();
             
+            query = "UPDATE lichsu_nhapkho SET tong_chiphi = tong_chiphi - ? WHERE ma_lohang = ?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setFloat(1, cost);
+            pstmt.setString(2, supplyId);
             pstmt.executeUpdate();
             
         }
@@ -172,24 +186,29 @@ public class InputDetail implements IInputDetail{
         
         String _storageId;
         float _weight;
+        float _cost;
         
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "SELECT ma_kho, khoi_luong FROM chitiet_nhapkho WHERE ma_lohang = ? AND so_thutu = ?";
+            String query = "SELECT ma_kho, khoi_luong, chi_phi FROM chitiet_nhapkho WHERE ma_lohang = ? AND so_thutu = ?";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, supplyId);
             pstmt.setInt(2, supplyNumber);
+            
             rs = pstmt.executeQuery();
+            if (rs.next()){
+                _storageId = rs.getString(1);
+                _weight = rs.getFloat(2);
+                _cost = rs.getFloat(3);
+                
+                
+                minusWeightFromStorage(_storageId, _weight);
+                minusWeightFromInputHistory(supplyId, _weight, _cost);
+            }
             
-            _storageId = rs.getString(1);
-            _weight = rs.getFloat(2);
-            
-            minusWeightFromStorage(_storageId, _weight);
-            minusWeightFromInputHistory(supplyId, _weight);
-            
-            query = "UPDATE chitiet_nhapkho SET ghi_chu = 'Hủy' WHERE ma_nhapkho = ? AND so_thutu = ?;";
+            query = "UPDATE chitiet_nhapkho SET ghi_chu = 'Hủy' WHERE ma_lohang = ? AND so_thutu = ?;";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, supplyId);
             pstmt.setInt(2, supplyNumber);

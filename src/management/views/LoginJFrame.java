@@ -104,6 +104,9 @@ public class LoginJFrame extends javax.swing.JFrame {
             disposeResources();
             new MainJFrame().setVisible(true);
         }
+        
+        MainJFrame frame = new MainJFrame();
+        frame.setVisible(true);
     }//GEN-LAST:event_loginButtonMouseClicked
 
     

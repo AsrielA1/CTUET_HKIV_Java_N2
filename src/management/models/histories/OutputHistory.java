@@ -13,7 +13,7 @@ import java.util.HashMap;
 import management.configs.PropertiesController;
 
 interface IOutputHistory{    
-    void addOutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote);
+    void addOutputHistory(String outputId, String outputDate, String outputTime, String outputNote);
     void delOutputHistory(String outputId);
 }
 
@@ -22,7 +22,7 @@ public class OutputHistory implements IOutputHistory{
     private String outputDate;
     private String outputTime;
     private float totalOutputWeight;
-    private float totalOutputIncome;
+    private float totalIncome;
     private String outputNote;
     
     private final HashMap<String, String> properties = PropertiesController.getProperties();
@@ -32,17 +32,17 @@ public class OutputHistory implements IOutputHistory{
     
     public OutputHistory(){}
 
-    public OutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote) {
+    public OutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalIncome, String outputNote) {
         this.outputId = outputId;
         this.outputDate = outputDate;
         this.outputTime = outputTime;
         this.totalOutputWeight = totalOutputWeight;
-        this.totalOutputIncome = totalOutputIncome;
+        this.totalIncome = totalIncome;
         this.outputNote = outputNote;
     }
     
     @Override
-    public void addOutputHistory(String outputId, String outputDate, String outputTime, float totalOutputWeight, float totalOutputIncome, String outputNote){
+    public void addOutputHistory(String outputId, String outputDate, String outputTime, String outputNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -55,10 +55,10 @@ public class OutputHistory implements IOutputHistory{
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, outputId);
-            pstmt.setDate(2, Date.valueOf(outputDate));
-            pstmt.setTime(3, Time.valueOf(outputTime));
-            pstmt.setFloat(4, totalOutputWeight);
-            pstmt.setFloat(5, totalOutputIncome);
+            pstmt.setString(2, outputDate);
+            pstmt.setString(3, outputTime);
+            pstmt.setFloat(4, 0);
+            pstmt.setFloat(5, 0);
             pstmt.setString(6, outputNote);
             
             pstmt.executeUpdate();

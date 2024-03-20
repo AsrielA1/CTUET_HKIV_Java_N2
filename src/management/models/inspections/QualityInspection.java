@@ -37,54 +37,6 @@ public class QualityInspection implements IQualityInspection{
         this.inspectionNote = inspectionNote;
     }
 
-    public String getInspectionId() {
-        return inspectionId;
-    }
-
-    public void setInspectionId(String inspectionId) {
-        this.inspectionId = inspectionId;
-    }
-
-    public String getStorageId() {
-        return storageId;
-    }
-
-    public void setStorageId(String storageId) {
-        this.storageId = storageId;
-    }
-
-    public String getInspectionDate() {
-        return inspectionDate;
-    }
-
-    public void setInspectionDate(String inspectionDate) {
-        this.inspectionDate = inspectionDate;
-    }
-
-    public float getLossWeight() {
-        return lossWeight;
-    }
-
-    public void setLossWeight(float lossWeight) {
-        this.lossWeight = lossWeight;
-    }
-
-    public float getLossRatio() {
-        return lossRatio;
-    }
-
-    public void setLossRatio(float lossRatio) {
-        this.lossRatio = lossRatio;
-    }
-
-    public String getInspectionNote() {
-        return inspectionNote;
-    }
-
-    public void setInspectionNote(String inspectionNote) {
-        this.inspectionNote = inspectionNote;
-    }
-    
     @Override
     public void addQualityInspection(String inspectionId, String storageId, String inspectionDate, float lossWeight, float lossRatio, String inspectionNote){
         Connection connection = null;
@@ -121,7 +73,7 @@ public class QualityInspection implements IQualityInspection{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "DELETE FROM danhgia_chatluong WHERE ma_xuatkho = '" + inspectionId + "';";
+            String query = "UPDATE danhgia_chatluong SET ghi_chu = 'Hủy' WHERE ma_xuatkho = '" + inspectionId + "';";
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         }

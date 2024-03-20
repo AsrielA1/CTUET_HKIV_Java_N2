@@ -1,0 +1,95 @@
+commit 33ccf019b0e09cccf6a1a112b1eebbf262402ade
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 20 14:06:13 2024 +1400
+
+    21:04 20/3/2024: Da sua lai loi dong bo giua khoi luong hien tai kho va huy chi tiet kho, nhung con lichsu_xuatkho, them vai giao dien co ban cho l khanh chinh sau
+
+commit 304aee319f8745c2254ed1837064f61f0ce0904d
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 20 14:06:00 2024 +1400
+
+    21:04 20/3/2024: Da sua lai loi dong bo giua khoi luong hien tai kho va huy chi tiet kho, nhung con lichsu_xuatkho, them vai giao dien co ban cho l khanh chinh sau
+
+commit 2552c97dad73cfb04f9432f89a2b558c93f33e7c
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Mon Mar 18 01:20:24 2024 +1400
+
+    19:19 18/3/2023: Da hoan thanh xong chitiet_nhapkho, chitiet_xuatkho co van de
+
+commit a97fedb73440c1aef235f686ca85827f9fc44436
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Sat Mar 16 20:59:15 2024 +1400
+
+    15:00 16/3/2024: Thay vi xoa khoi csdl se chi thay doi ghi chu
+
+commit 8be2271446ef5f572c9a2f3277b007bf963c877d
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 13 09:49:19 2024 +1400
+
+    16:48 13/3/2024: Sua xong properties
+
+commit 645bb51960417222faa7b5432cf82aac1f7f7a7e
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 13 09:14:25 2024 +1400
+
+    15:45 13/3/2024: Da chinh xong cac models, chi co chuc nang them, xoa
+
+commit 619ca9018f403499e2e1dc4b0d798fb9480ad7ba
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 13 09:14:13 2024 +1400
+
+    15:45 13/3/2024: Da chinh xong cac models, chi co chuc nang them, xoa
+
+commit b9af4763454e02ae278ce147a8081d1023ff348f
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 13 17:25:36 2024 +1400
+
+    10:25 13/3/2024: Them model duoc phan nua, deadline: 4/4
+
+commit 1b6553b947d2ac093e37887299169f249b05f047
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Tue Mar 12 14:11:42 2024 +1400
+
+    21:11 12/3/2024: Tai cau truc lai du an theo mo hinh MVC, da xong danh muc nhan vien, ca, kho
+
+commit 0405300316c28d9021e559598f9a4c6e18e5a2e9
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Fri Mar 8 18:18:32 2024 +1400
+
+    11:14 8/3/2024: Da xong danh muc ca, nhung con can them dieu kien can tren va can duoi cho nhiet do do am, bat dau tien hanh chi tiet kho
+
+commit cf8e8dbbb2cd7e75f045bb551e1d893b825fd435
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 6 12:50:08 2024 +1400
+
+    5/6 19:50 Them danh muc ca, nhung khong the cuon duoc, luc dau thi duoc, khong biet do dau
+
+commit 125bac004d92b2cd38f81c78174652ae5b34e7fa
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Wed Mar 6 11:22:43 2024 +1400
+
+    6/3/2024 18:22 Xoa bang kho do chua the nhan du lieu thoi gian thuc
+
+commit 5476ae85794cf94fa810a5ee3a0d334abe451699
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Tue Mar 5 14:55:22 2024 +1400
+
+    21:53 5/3 Ket noi duoc csdl voi bang, nhung viec giam sat thoi gian thuc co the khac
+
+commit 3185190482f38a172a4e930f97a73eb07541dab5
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Mon Mar 4 04:35:40 2024 +1400
+
+    22:35 3/3/2024: Da sua xong frame login
+
+commit 470beb9f5ffaa7f645ee5bc59977b99be4253c86
+Author: Nguyen Hoang An <an07042k4@gmail.com>
+Date:   Mon Mar 4 04:15:01 2024 +1400
+
+    Frame login bi loi, xong 1 pha main frame
+
+commit bd64ec11166675fd11292b972f0e33e85b884350
+Author: Asriel <an07042k4@gmail.com>
+Date:   Thu Feb 29 17:49:16 2024 +0000
+
+    Su dung shell trong java

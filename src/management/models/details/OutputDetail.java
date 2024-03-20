@@ -187,12 +187,12 @@ public class OutputDetail implements IOutputDetail{
             
             rs = pstmt.executeQuery();
             if (rs.next()){
-                String _outputId = rs.getString(1);
+                String _storageId = rs.getString(1);
                 float _weight = rs.getFloat(2);
                 float _income = rs.getFloat(3);
                 
-                addWeightToStorage(_outputId, _weight);
-                minusWeightFromOutputHistory(_outputId, _weight, _income);
+                addWeightToStorage(_storageId, _weight);
+                minusWeightFromOutputHistory(outputId, _weight, _income);
             }
             
             query = "UPDATE chitiet_xuatkho SET ghi_chu = 'Hủy' WHERE ma_xuatkho = ? AND so_thutu = ?;";

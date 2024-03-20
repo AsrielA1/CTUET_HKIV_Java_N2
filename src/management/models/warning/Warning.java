@@ -37,54 +37,6 @@ public class Warning implements IWarning{
         this.warningNote = warningNote;
     }
 
-    public String getWarningDate() {
-        return warningDate;
-    }
-
-    public void setWarningDate(String warningDate) {
-        this.warningDate = warningDate;
-    }
-
-    public String getWarningTime() {
-        return warningTime;
-    }
-
-    public void setWarningTime(String warningTime) {
-        this.warningTime = warningTime;
-    }
-
-    public String getStorageId() {
-        return storageId;
-    }
-
-    public void setStorageId(String storageId) {
-        this.storageId = storageId;
-    }
-
-    public String getWarningType() {
-        return warningType;
-    }
-
-    public void setWarningType(String warningType) {
-        this.warningType = warningType;
-    }
-
-    public String getLevelOfThreat() {
-        return levelOfThreat;
-    }
-
-    public void setLevelOfThreat(String levelOfThreat) {
-        this.levelOfThreat = levelOfThreat;
-    }
-
-    public String getWarningNote() {
-        return warningNote;
-    }
-
-    public void setWarningNote(String warningNote) {
-        this.warningNote = warningNote;
-    }
-    
     @Override
     public void addWarning(String warningDate, String warningTime, String storageId, String warningType, String levelOfThreat, String warningNote){
         Connection connection = null;

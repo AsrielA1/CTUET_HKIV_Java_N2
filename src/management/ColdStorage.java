@@ -1,7 +1,5 @@
 package management;
 
-import management.views.fish.fishJFrame;
-
 import management.models.categories.*;
 import management.models.histories.*;
 import management.models.details.*;
@@ -31,8 +29,8 @@ public class ColdStorage {
 //       oObj.addOutputHistory("output1", "16/3/2024", "17:28", "");
 //        
         OutputDetail ohd = new OutputDetail();
-        ohd.addOutputDetail("output1", 1, "storage1", 150, 3);
-        ohd.delOutputDetail("Output1", 1);
+//        ohd.addOutputDetail("output1", 1, "storage1", 150, 3);
+        ohd.delOutputDetail("output1", 1);
         
         
     }

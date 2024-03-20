@@ -152,15 +152,18 @@ public class OutputDetail implements IOutputDetail{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "UPDATE lichsu_xuatkho SET tong_khoiluong = tong_khoiluong - ?, tong_doanhthu = tong_doanhthu - income WHERE ma_kho = ?";
+            String query = "UPDATE lichsu_xuatkho SET tong_khoiluong = tong_khoiluong - ?, tong_doanhthu = tong_doanhthu - ? WHERE ma_xuatkho = ?";
             pstmt = connection.prepareStatement(query);
             
             pstmt.setFloat(1, weight);
             pstmt.setFloat(2, income);
-            pstmt.setString(2, outputId);
+            pstmt.setString(3, outputId);
+            
+            System.out.println("Weight = " + String.valueOf(weight));
+            System.out.println("Income = " + String.valueOf(income));
+            System.out.println("OutputId = " + String.valueOf(outputId));
             
             pstmt.executeUpdate();
-            
         }
         catch (Exception e){
             System.out.println("Error in management.models.details.OutputDetail.minusWeightFromOutputHistory\n" + e);
@@ -188,8 +191,7 @@ public class OutputDetail implements IOutputDetail{
                 float _weight = rs.getFloat(2);
                 float _income = rs.getFloat(3);
                 
-                
-                minusWeightFromStorage(_outputId, _weight);
+                addWeightToStorage(_outputId, _weight);
                 minusWeightFromOutputHistory(_outputId, _weight, _income);
             }
             
@@ -197,6 +199,7 @@ public class OutputDetail implements IOutputDetail{
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, outputId);
             pstmt.setInt(2, outputNumber);
+
             pstmt.executeUpdate();
         }
         catch (Exception e){

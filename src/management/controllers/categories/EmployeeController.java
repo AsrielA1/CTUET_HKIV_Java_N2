@@ -46,35 +46,40 @@ public class EmployeeController {
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
             stmt = connection.createStatement();
-            query = "SELECT ma_nhanvien, ho_ten, so_dienthoai FROM nhan_vien;";
+            query = "SELECT ma_nhanvien, ho_ten, so_dienthoai FROM nhan_vien WHERE ghi_chu NOT LIKE '%Nghỉ%';";
             rs = stmt.executeQuery(query);
             
             while (rs.next()){
                 employeeId = String.valueOf(rs.getString(1));
                 employeeName = String.valueOf(rs.getString(2));
                 employeeNumber = String.valueOf(rs.getString(3));
-                employeeNote = String.valueOf(rs.getString(4));
                 
-                String employeeDataList[] = {employeeId, employeeName, employeeNumber, employeeNote};
+                String employeeDataList[] = {employeeId, employeeName, employeeNumber};
                 
                 tModel.addRow(employeeDataList);
             }
         }
         catch (Exception e){
-            System.out.println("Error in management.controllers.categories.EmployeeController.showAllEmployee" + e);
+            System.out.println("Error in management.controllers.categories.EmployeeController.showAllEmployee\n" + e);
         }
     }
     
     public void addEmployeeData(JTextField TFemployeeId, JTextField TFpassword, JTextField TFemployeeName, JTextField TFemployeeNumber, JTextField TFemployeeNote){
-        String employeeId, password, employeeName, employeeNumber, employeeNote;
+        try {
         
-        employeeId = String.valueOf(TFemployeeId.getText());
-        password = String.valueOf(TFpassword.getText());
-        employeeName = String.valueOf(TFemployeeName);
-        employeeNumber = String.valueOf(TFemployeeNumber.getText());
-        employeeNote = String.valueOf(TFemployeeNote.getText());
-        
-        employeeFunction.addEmployee(employeeId, password, employeeName, employeeNumber, employeeNote);
+            String employeeId, password, employeeName, employeeNumber, employeeNote;
+
+            employeeId = String.valueOf(TFemployeeId.getText());
+            password = String.valueOf(TFpassword.getText());
+            employeeName = String.valueOf(TFemployeeName.getText());
+            employeeNumber = String.valueOf(TFemployeeNumber.getText());
+            employeeNote = String.valueOf(TFemployeeNote.getText());
+
+            employeeFunction.addEmployee(employeeId, password, employeeName, employeeNumber, employeeNote);
+        }
+        catch (Exception e){
+            System.out.println("Error in Error in management.controllers.categories.EmployeeController.addEmployeeData\n" + e);
+        }
     }
     
     public void hideEmployeeData(JTextField TFemployeeId){

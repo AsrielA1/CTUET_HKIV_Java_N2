@@ -4,15 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/ColdStorage.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/input/InputHistoryJFrame.java</file>
             <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/employee/EmployeeJFrame.java</file>
             <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/employee/UpdateEmployeeJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/inspections/QualityInspection.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/details/OutputDetail.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/storage/UpdateStorageJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/provider/ProviderJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/warning/Warning.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/output/OutputHistoryJFrame.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/categories/Employee.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/categories/EmployeeController.java</file>
         </group>
     </open-files>
 </project-private>

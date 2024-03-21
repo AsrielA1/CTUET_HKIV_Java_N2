@@ -1,5 +1,7 @@
 package management.views.categories.employee;
 
+import javax.swing.table.DefaultTableModel;
+
 import management.controllers.categories.EmployeeController;
 
 public class EmployeeJFrame extends javax.swing.JFrame {
@@ -61,6 +63,11 @@ public class EmployeeJFrame extends javax.swing.JFrame {
         functionPanel.add(filterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, -1, -1));
 
         jButton1.setText("Xem chi tiết");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         functionPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
         delButton.setText("Xóa");
@@ -93,12 +100,24 @@ public class EmployeeJFrame extends javax.swing.JFrame {
 
     private void addEmployeeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployeeButtonMouseClicked
         UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame();
+        frame.hideUpdateButton();
         frame.setVisible(true);
     }//GEN-LAST:event_addEmployeeButtonMouseClicked
 
     private void delButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delButtonMouseClicked
-
+        int row = employeeTable.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)employeeTable.getModel();
+        
+        String employeeId = model.getValueAt(row, 0).toString();
+        employeeController.hideEmployeeData(employeeId);
+        employeeController.showAllEmployee(employeeTable);
     }//GEN-LAST:event_delButtonMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame();
+        frame.hidePasswordTF();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

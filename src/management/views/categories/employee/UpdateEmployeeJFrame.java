@@ -1,5 +1,6 @@
 package management.views.categories.employee;
 
+import javax.swing.JTextField;
 import management.controllers.categories.EmployeeController;
 
 public class UpdateEmployeeJFrame extends javax.swing.JFrame {
@@ -8,6 +9,8 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
     
     public UpdateEmployeeJFrame() {
         initComponents();
+        
+        employeeIdTF.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -16,7 +19,7 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
 
         informationPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        passwordLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -38,8 +41,8 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
         jLabel1.setText("Mã nhân viên");
         informationPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 160, 30));
 
-        jLabel2.setText("Mật khẩu");
-        informationPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 170, 50));
+        passwordLabel.setText("Mật khẩu");
+        informationPanel.add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 170, 50));
 
         jLabel3.setText("Họ tên");
         informationPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 170, 70));
@@ -58,6 +61,11 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
         getContentPane().add(informationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 500));
 
         updateButton.setText("Cập nhật");
+        updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateButtonMouseClicked(evt);
+            }
+        });
 
         confirmButton.setText("Xác nhận");
         confirmButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -67,6 +75,11 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Hủy");
+        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout functionPanelLayout = new javax.swing.GroupLayout(functionPanel);
         functionPanel.setLayout(functionPanelLayout);
@@ -100,9 +113,25 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
         employeeController.addEmployeeData(employeeIdTF, employeeIdTF, employeeNameTF, employeeNumberTF, employeeNoteTF);
     }//GEN-LAST:event_confirmButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+
+    }//GEN-LAST:event_updateButtonMouseClicked
+
+    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
+        dispose();
+    }//GEN-LAST:event_cancelButtonMouseClicked
+    
+    
+    
+    public void hideUpdateButton(){
+        updateButton.setVisible(false);
+    }
+    
+    public void hidePasswordTF(){
+        passwordTF.setVisible(false);
+        passwordLabel.setVisible(false);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -146,10 +175,10 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel functionPanel;
     private javax.swing.JPanel informationPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordTF;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables

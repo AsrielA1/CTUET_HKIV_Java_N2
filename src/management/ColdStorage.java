@@ -5,11 +5,12 @@ import management.models.histories.*;
 import management.models.details.*;
 import management.views.categories.employee.UpdateEmployeeJFrame;
 import management.views.categories.employee.EmployeeJFrame;
+import management.views.categories.provider.ProviderJFrame;
 
 public class ColdStorage {
 
     public static void main(String[] args) {
-        EmployeeJFrame test = new EmployeeJFrame();
+        ProviderJFrame test = new ProviderJFrame();
         test.setVisible(true);
         
     }

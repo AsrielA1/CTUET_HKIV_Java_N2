@@ -22,8 +22,9 @@ public class EmployeeJFrame extends javax.swing.JFrame {
         functionPanel = new javax.swing.JPanel();
         addEmployeeButton = new javax.swing.JButton();
         filterButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        viewDetailButton = new javax.swing.JButton();
         delButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,18 +58,18 @@ public class EmployeeJFrame extends javax.swing.JFrame {
                 addEmployeeButtonActionPerformed(evt);
             }
         });
-        functionPanel.add(addEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, -1, -1));
+        functionPanel.add(addEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
 
         filterButton.setText("Bộ lọc");
         functionPanel.add(filterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, -1, -1));
 
-        jButton1.setText("Xem chi tiết");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        viewDetailButton.setText("Xem chi tiết");
+        viewDetailButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                viewDetailButtonMouseClicked(evt);
             }
         });
-        functionPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
+        functionPanel.add(viewDetailButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
         delButton.setText("Xóa");
         delButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,7 +77,15 @@ public class EmployeeJFrame extends javax.swing.JFrame {
                 delButtonMouseClicked(evt);
             }
         });
-        functionPanel.add(delButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, -1, -1));
+        functionPanel.add(delButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+
+        refreshButton.setText("Làm mới");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+        functionPanel.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
 
         allPanel.add(functionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 110));
 
@@ -92,15 +101,18 @@ public class EmployeeJFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
     private void addEmployeeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployeeButtonMouseClicked
-        UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame();
-        frame.hideUpdateButton();
+        UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame(true);
+        frame.hideUpdateButton();        
+        frame.setEditable(true, true);
         frame.setVisible(true);
     }//GEN-LAST:event_addEmployeeButtonMouseClicked
 
@@ -113,11 +125,22 @@ public class EmployeeJFrame extends javax.swing.JFrame {
         employeeController.showAllEmployee(employeeTable);
     }//GEN-LAST:event_delButtonMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame();
+    private void viewDetailButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewDetailButtonMouseClicked
+        UpdateEmployeeJFrame frame = new UpdateEmployeeJFrame(false);
         frame.hidePasswordTF();
+        frame.setEditable(false, false);
+        
+        int row = employeeTable.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)employeeTable.getModel();
+        String employeeId = model.getValueAt(row, 1).toString();
+                
+        employeeController.showSingleEmployee(frame, employeeId);
         frame.setVisible(true);
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_viewDetailButtonMouseClicked
+
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        employeeController.showAllEmployee(employeeTable);
+    }//GEN-LAST:event_refreshButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -161,7 +184,8 @@ public class EmployeeJFrame extends javax.swing.JFrame {
     private javax.swing.JTable employeeTable;
     private javax.swing.JButton filterButton;
     private javax.swing.JPanel functionPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refreshButton;
+    private javax.swing.JButton viewDetailButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,12 +5,27 @@ import management.controllers.categories.EmployeeController;
 
 public class UpdateEmployeeJFrame extends javax.swing.JFrame {
     
-    public final EmployeeController employeeController = new EmployeeController();
+    private boolean isAddJFrame;
+    
+    private final EmployeeController employeeController = new EmployeeController();
     
     public UpdateEmployeeJFrame() {
         initComponents();
         
-        employeeIdTF.setEditable(false);
+        showConfirmButton(false);
+    }
+    
+    public UpdateEmployeeJFrame(boolean addNewEmployee) {
+        initComponents();
+        
+        if (addNewEmployee){
+            showConfirmButton(true);
+        } else {
+            showConfirmButton(false);
+        }
+        
+        isAddJFrame = addNewEmployee;
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -107,14 +122,22 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
         getContentPane().add(functionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 270, 50));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
-        employeeController.addEmployeeData(employeeIdTF, employeeIdTF, employeeNameTF, employeeNumberTF, employeeNoteTF);
+        if (isAddJFrame)
+            employeeController.addEmployeeData(employeeIdTF, passwordTF, employeeNameTF, employeeNumberTF, employeeNoteTF);
+        else 
+            employeeController.updateEmployeeData(employeeIdTF, employeeNameTF, employeeNumberTF, employeeNoteTF);
+        
+        dispose();
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-
+        hideUpdateButton();
+        setEditable(true, false);
+        showConfirmButton(true);
     }//GEN-LAST:event_updateButtonMouseClicked
 
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
@@ -122,6 +145,29 @@ public class UpdateEmployeeJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
     
     
+    public void showSingleEmployee(String employeeId, String employeeName, String employeeNumber, String employeeNote){
+        employeeIdTF.setText(employeeId);
+        employeeNameTF.setText(employeeName);
+        employeeNumberTF.setText(employeeNumber);
+        employeeNoteTF.setText(employeeNote);
+    }
+    
+    public void setEditable(boolean b, boolean isAddButton){
+        employeeNameTF.setEditable(b);
+        employeeNumberTF.setEditable(b);
+        employeeNoteTF.setEditable(b);
+        
+        if (isAddButton){
+            employeeIdTF.setEditable(true);
+        } else {
+            employeeIdTF.setEditable(false);
+        }
+        
+    }
+    
+    public void showConfirmButton(boolean b){
+        confirmButton.setVisible(b);
+    }
     
     public void hideUpdateButton(){
         updateButton.setVisible(false);

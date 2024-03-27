@@ -22,6 +22,7 @@ import management.configs.PropertiesController;
 interface IProviderController{
     void showSingleProviderData(UpdateProviderJFrame frame, JTable providerTable);
     void addProviderData(JTextField providerIdTF, JTextField providerNameTF, JTextField providerMailTF, JTextField providerNumberTF, JTextField providerNoteTF);
+    void updateProviderData(JTextField providerIdTF, JTextField providerNameTF, JTextField providerMailTF, JTextField providerNumberTF, JTextField providerNoteTF);
     void showAllProviderData(JTable providerTable);   
     void hideProviderData(JTable providerTable);
 }
@@ -69,6 +70,7 @@ public class ProviderController implements IProviderController {
         }
         
         catch (Exception e){
+            System.out.println("Error in management.controllers.categories.ProviderController.showSingleProviderData\n" + e);
         }
         
         
@@ -91,6 +93,26 @@ public class ProviderController implements IProviderController {
             System.out.println("Error in management.controllers.categories.ProviderController.addProviderData\n" + e);
         }
         
+    }
+    
+    @Override
+    public  void updateProviderData(JTextField providerIdTF, JTextField providerNameTF, JTextField providerMailTF, JTextField providerNumberTF, JTextField providerNoteTF){
+        String providerId, providerName, providerMail, providerNumber, providerNote;
+        
+        try {
+            providerId = providerIdTF.getText();
+            providerName = providerNameTF.getText();
+            providerMail = providerMailTF.getText();
+            providerNumber = providerNumberTF.getText();
+            providerNote = providerNoteTF.getText();
+            
+            System.out.println(providerId + providerName + providerMail + providerNumber + providerNote);
+            
+            providerModel.updateProvider(providerId, providerName, providerMail, providerNumber, providerNote);
+        }
+        catch (Exception e) {
+            System.out.println("Error in management.controllers.categories.ProviderController.updateProviderData\n" + e);
+        }
     }
     
     @Override

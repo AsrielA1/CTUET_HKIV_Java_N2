@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 public class UpdateProviderJFrame extends javax.swing.JFrame {
     
     private final ProviderController providerController = new ProviderController();
-    private boolean isPressedUpdate = false;
+    private int pressUpdateCount = 0;
     
     private boolean isAddJFrame;
 
@@ -207,6 +207,7 @@ public class UpdateProviderJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
+        pressUpdateCount++;
         if (isAddJFrame){
             providerController.addProviderData(providerIdTF, providerNameTF, providerMailTF, providerNumberTF, providerNoteTF);
             resetTxtField();
@@ -214,6 +215,10 @@ public class UpdateProviderJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Đã thêm nhà cung cấp thành công");
         } else {
             setEditable(true);
+            if (pressUpdateCount >= 2){
+                providerController.updateProviderData(providerIdTF, providerNameTF, providerMailTF, providerNumberTF, providerNoteTF);
+                JOptionPane.showMessageDialog(rootPane, "Đã cập nhật nhà cung cấp thành công");
+            }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
 

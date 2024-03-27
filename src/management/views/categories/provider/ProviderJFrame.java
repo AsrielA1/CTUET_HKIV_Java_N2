@@ -70,7 +70,7 @@ public class ProviderJFrame extends javax.swing.JFrame {
         });
         functionPanel.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
 
-        allPanel.add(functionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 190));
+        allPanel.add(functionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 600, 150));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -98,7 +98,7 @@ public class ProviderJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(providerTable);
 
-        allPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 600, 610));
+        allPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 600, 510));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

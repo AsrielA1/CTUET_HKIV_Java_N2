@@ -1,20 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package management.views.histories.output;
 
-/**
- *
- * @author Asriel
- */
+import management.controllers.histories.OutputHistoryController;
+
 public class OutputHistoryJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form OutputHistoryJFrame
-     */
+    private final OutputHistoryController outputController = new OutputHistoryController();
+    
     public OutputHistoryJFrame() {
         initComponents();
+        
+        outputController.showAllOutputData(outputHistoryTable);
     }
 
     /**
@@ -28,11 +23,12 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
 
         allPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        outputHistoryTable = new javax.swing.JTable();
         functionPanel = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         viewDetailButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -40,7 +36,7 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
 
         allPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        outputHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,22 +47,36 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(outputHistoryTable);
 
         allPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 600, 280));
 
         addButton.setText("Thêm");
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
+        });
 
         viewDetailButton.setText("Xem chi tiết");
 
         jButton3.setText("Xóa");
+
+        refreshButton.setText("Làm mới");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout functionPanelLayout = new javax.swing.GroupLayout(functionPanel);
         functionPanel.setLayout(functionPanelLayout);
         functionPanelLayout.setHorizontalGroup(
             functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, functionPanelLayout.createSequentialGroup()
-                .addContainerGap(291, Short.MAX_VALUE)
+                .addContainerGap(208, Short.MAX_VALUE)
+                .addComponent(refreshButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(viewDetailButton)
@@ -81,7 +91,8 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
                 .addGroup(functionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(viewDetailButton)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(refreshButton))
                 .addGap(40, 40, 40))
         );
 
@@ -106,6 +117,15 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        outputController.showAllOutputData(outputHistoryTable);
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        AddOutputHistoryJFrame frame = new AddOutputHistoryJFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -150,7 +170,8 @@ public class OutputHistoryJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable outputHistoryTable;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton viewDetailButton;
     // End of variables declaration//GEN-END:variables
 }

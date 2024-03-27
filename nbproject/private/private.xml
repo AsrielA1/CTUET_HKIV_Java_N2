@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/ColdStorage.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/employee/EmployeeJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/categories/employee/UpdateEmployeeJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/categories/Employee.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/categories/EmployeeController.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/categories/Provider.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/input/UpdateInputHistoryJFrame.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/input/InputHistoryJFrame.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/histories/InputHistory.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/histories/InputHistoryController.java</file>
         </group>
     </open-files>
 </project-private>

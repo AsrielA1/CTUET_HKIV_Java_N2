@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/input/UpdateInputHistoryJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/views/histories/input/InputHistoryJFrame.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/models/histories/InputHistory.java</file>
-            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/histories/InputHistoryController.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/histories/InputDetailController.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/histories/OutputDetailController.java</file>
+            <file>file:/D:/Semesters/HKIV/Java/ColdStorage/src/management/controllers/histories/OutputHistoryController.java</file>
         </group>
     </open-files>
 </project-private>

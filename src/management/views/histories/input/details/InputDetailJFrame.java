@@ -9,13 +9,13 @@ public class InputDetailJFrame extends javax.swing.JFrame {
     public InputDetailJFrame() {
         initComponents();
         
-        inputDetailController.addInputHistoryChooser(inputHistoryComboBox);
+        inputDetailController.addInputHistoryIdChooser(inputHistoryComboBox);
     }
     
     public InputDetailJFrame(String _inputHistoryId) {
         initComponents();
         
-        inputDetailController.addInputHistoryChooser(inputHistoryComboBox);
+        inputDetailController.addInputHistoryIdChooser(inputHistoryComboBox);
         inputDetailController.showAllInputDetail(inputDetailTable, _inputHistoryId);
         inputHistoryComboBox.setSelectedItem(_inputHistoryId);
     }
@@ -35,6 +35,8 @@ public class InputDetailJFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         inputHistoryComboBox = new javax.swing.JComboBox<>();
         refreshButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +62,20 @@ public class InputDetailJFrame extends javax.swing.JFrame {
             }
         });
 
+        addButton.setText("Thêm");
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
+        });
+
+        deleteButton.setText("Xóa");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -69,6 +85,10 @@ public class InputDetailJFrame extends javax.swing.JFrame {
                 .addComponent(inputHistoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(refreshButton)
+                .addGap(18, 18, 18)
+                .addComponent(addButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -77,7 +97,9 @@ public class InputDetailJFrame extends javax.swing.JFrame {
                 .addContainerGap(90, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputHistoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refreshButton))
+                    .addComponent(refreshButton)
+                    .addComponent(addButton)
+                    .addComponent(deleteButton))
                 .addGap(90, 90, 90))
         );
 
@@ -115,6 +137,16 @@ public class InputDetailJFrame extends javax.swing.JFrame {
         inputDetailController.showAllInputDetail(inputDetailTable, inputHistoryId);
     }//GEN-LAST:event_refreshButtonMouseClicked
 
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        AddInputDetailJFrame frame = new AddInputDetailJFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        inputDetailController.hideInputDetail(inputDetailTable, inputHistoryComboBox);
+        inputDetailController.showAllInputDetail(inputDetailTable, inputHistoryComboBox.getSelectedItem().toString());
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -151,7 +183,9 @@ public class InputDetailJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel allPanel;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTable inputDetailTable;
     private javax.swing.JComboBox<String> inputHistoryComboBox;
     private javax.swing.JPanel jPanel1;

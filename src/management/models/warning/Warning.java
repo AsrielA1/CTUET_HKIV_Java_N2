@@ -10,7 +10,6 @@ import management.configs.PropertiesController;
 
 interface IWarning{
     void addWarning(String warningDate, String warningTime, String storageId, String warningType, String levelOfThreat, String warningNote);
-    void delWarning(String warningDate, String warningTime);
 }
 
 public class Warning implements IWarning{
@@ -47,7 +46,7 @@ public class Warning implements IWarning{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO canh_bao VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO canh_bao(ngay_canhbao, thoigian_canhbao, ma_kho, loai_canhbao, mucdo_nghiemtrong, noidung_canhbao) VALUES (?, ?, ?, ?, ?, ?);";
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, warningDate);
@@ -64,25 +63,4 @@ public class Warning implements IWarning{
         }
     }
     
-    @Override
-    public void delWarning(String warningDate, String warningTime){
-        Connection connection = null;
-        PreparedStatement pstmt = null;
-        
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-            
-            String query = "DELETE FROM canh_bao WHERE ngay_canhbao = ? AND thoigian_canhbao = ?";
-            pstmt = connection.prepareStatement(query);
-            
-            pstmt.setString(1, warningDate);
-            pstmt.setString(2, warningTime);
-            
-            pstmt.executeUpdate();
-        }
-        catch (Exception e){
-            System.out.println("Error in management.models.warning.Warning.delWarning\n" + e);
-        }
-    }
 }

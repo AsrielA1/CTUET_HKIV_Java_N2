@@ -12,7 +12,7 @@ import management.configs.PropertiesController;
 interface IInputDetail{
     void addWeightToStorage(String storageId, float weight);
     void addWeightToInputHistory(String supplyId, float weight, float cost);
-    void addInputDetail(String supplyId, int supplyNumber, String storageId, float costPerWeight, float weight, String inputDetailNote);
+    void addInputDetail(String supplyId, String storageId, float costPerWeight, float weight, String inputDetailNote);
     
     void minusWeightFromStorage(String storageId, float weight);
     void minusWeightFromInputHistory(String supplyId, float weight, float cost);
@@ -94,7 +94,7 @@ public class InputDetail implements IInputDetail{
     }
     
     @Override
-    public void addInputDetail(String supplyId, int supplyNumber, String storageId, float costPerWeight, float weight, String inputDetailNote){
+    public void addInputDetail(String supplyId, String storageId, float costPerWeight, float weight, String inputDetailNote){
         Connection connection = null;
         PreparedStatement pstmt = null;
         
@@ -103,18 +103,17 @@ public class InputDetail implements IInputDetail{
             
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);
             
-            String query = "INSERT INTO chitiet_nhapkho VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO chitiet_nhapkho(ma_lohang, ma_kho, chiphi_theodv, khoi_luong, chi_phi, ghi_chu) VALUES (?, ?, ?, ?, ?, ?);";
             
             float cost = costPerWeight * weight;
             
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, supplyId);
-            pstmt.setInt(2, supplyNumber);
-            pstmt.setString(3, storageId);
-            pstmt.setFloat(4, costPerWeight);
-            pstmt.setFloat(5, weight);
-            pstmt.setFloat(6, cost);
-            pstmt.setString(7, inputDetailNote);
+            pstmt.setString(2, storageId);
+            pstmt.setFloat(3, costPerWeight);
+            pstmt.setFloat(4, weight);
+            pstmt.setFloat(5, cost);
+            pstmt.setString(6, inputDetailNote);
             
             pstmt.executeUpdate();
             
